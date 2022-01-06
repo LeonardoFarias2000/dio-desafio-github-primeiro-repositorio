@@ -1,0 +1,152 @@
+Comandos no cmd 
+dir – da uma lista de diretórios contidos na pasta que estamos situados
+cd – permite que a gnt navegue entre as pastas passando um caminho especifico utilizando a barra /  ( cd / - leva para a base do diretório c)
+cd .. – para retroceder um nível
+cls – utilizado para limpar a tela
+--O tab serve para completar , exemplo cd w <tab> , ele ira complementar windows—
+mkdir – Cria uma pasta -> mkdir ‘’nome da pasta’’
+echo – printa uma frase no terminal , um texto que vc passa (echo hello)
+(>) redirecionador de fluxo – vai pegar a saída da função echo e vai jogar em um arquivo
+=echo hello > hello.txt , o sistema ira verificar se tem um arquivo chamado hello.txt, se não tiver ele o criara automaticamente
+del – serve para deletar (del workspace) // não deletou
+
+***no Windows tem uma diferença entre deletar arquivos e deletar repositórios, o del apenas deleta arquivos, então nesse caso ele apenas deletou os arquivos dentro do repositório***
+
+Setinha pra cima – serve para listar os últimos comandos que utilizamos
+rmdir – remove o repositório com todos os arquivos dentro (rmdir workspace /S /Q)
+ 
+NO GIT BASH
+Openssl sha1 – identificando o algoritmo de  encriptação e passar o arquivo que estamos usando
+SHA1(texto.txt)= 734cdaa9601d2431b1310a67103436c51243908b
+Uma letra foi alterado no documento , ele gerou outro código de 40 caracteres
+SHA1(texto.txt)= d3bd2a409c7bafab2710527dbc40f45ffa71ad97
+Se retornarmos o arquivo a versão original ele volta para o primeiro código
+Tipo de objeto básicos do git 
+BLOBS
+TREES
+COMMITS
+
+Blob-Os arquivos ficam guardados dentro do blob, e o blob tem metadados dentro dele , ele vai ter o tipo do objeto (string,number,etc) , o tamanho, uma \0, e o conteúdo de fato desse arquivo.
+Tree- as trees armazenam blobs , o blob é o bloco básico de composição , a tree armazenando e apontando para tipor de blobs diferentes . as trees também tem metadados, que por sua vez tem sha1 e a arvore também guarda o nome do arquivo, o blob não guarda o nome.a arvore e responsável por montar toda a estrutura de onde esta localizado os arquivados. Elas podem apontar prs outras arvores , isso porque um diretório dentro de um sistema operacional pode ter outros diretórios 
+Se mudarmos algo em um arquivo em um blob que esta dentro de uma tree, o código da tree também mudara , tudo sempre esta conectado, estaremos mudando toda a encriptação da tree.
+Commit – commit é o objeto que ira juntar tudo , ele vai dar sentido pra alteração que estamos fazendo, ele aponta para uma arvore, aponta para um parente, para o ultimo commit realizado antes dele, ele aponta pra um autor, pra uma mensagem tbm. 
+Chave SSH – serve para conceder uma conecçao segura e encriptada entre duas maquinas(no caso servidor do github).
+*Ir no site no github,settings , ssh Keys, e configurar a chave.
+*Abrir o git bash.
+COMANDOS PARA GERAR A CHAVE no gitbash
+•	ssg-keygen -t ed25519 -c emaildogithub@
+•	ele vai gerar o local aonde serão armazenadas essa chave
+•	digitar uma senha duas vezes
+•	ele vai gerar duas chaves em duas pastas, a publica termina com .pub
+•	navegar ate a pasta e ver as chaves
+•	cd /c/Users/Leonardo/.ssh/
+•	ls ( para listar os arquivos)
+•	cat id_ed25519.pub (cat serve para ver o conteúdo de algo)
+•	ele apresenta a chave publica
+•	copiar e ir para o github
+•	dar um titulo,colar a chave
+•	digitar a senha
+•	pronto a chave foi criada
+•	inicializar o ssh agent(entidade responsável por pegar chaves e lidar com elas
+•	eval $(ssh-agent -s)
+•	ele startou o projeto com o numero do processo
+•	agora entregar a chave para esse agente
+•	ssh-add (caminho da chave) id_ed255519
+•	digitar senha
+•	a entidade foi adicionada
+
+
+
+
+
+
+A segunda forma de autenticação segura é o Token de acesso pessoal
+•	Na pagina do git/setting ir em developer settings
+•	Personal accsess tokens
+•	Generate new token
+•	Marcar opção repo
+•	Generate token
+•	Gerou o token, copiar e salvar em algum arquivo seguro
+
+#Iniciando o git e criando um commit 
+Para iniciar o repositório do git vamos usar o git init
+Para mover git add
+Para criar commit o git commit
+
+----criando um repositório----
+•	Ir para a pasta workspace que criamos
+•	Botão direito na pasta(gitbash here)
+•	cd workspace
+•	criar pasta que vamos usar
+•	mkdir livro-receitas
+•	cd livro-receitas
+•	iniciar o git – git init
+•	ls – a para listar arquivos ocultos
+•	configurar o git se for a primeira vez de uso
+•	git config –-global user.email seuemail@ghj.com
+•	git config –-global user.name Leonardo
+-----Adicionando um arquivo a pasta----
+Criar um arquivo texto dentro da pasta workspace/livro-receitas
+No terminal
+git add *
+git commit -m “commit inicial”
+ 
+
+git status – ajuda a monitorar o status dos arquivos
+-mkdir receitas
+- mv – usa para mover de uma pasta para outra
+Mv strogonoff.md.txt ./receitas
+Git add strogonoff.md.txt receitas/
+Git commit -m “cria pasta receitas , move arquivo para receitas”
+echo > README.txt  criando arquivo
+modificar o arquivo
+git add * (* faz adicionar tudo para staged para poder ser comitado)
+git config –list (apresenta uma lista com todas as configurações do seu git
+*para alterar alguma configuração*
+Git config –global --unset user.name
+Git config –global user.name “LeonardoFarias2000”
+--------------------------------------------- 
+No github criando repositório
+Entrar na sua conta
+Seus repositórios
+Novo
+Nome do repositório
+Clicar em criar
+Copiar o caminho que o git da https://github.com/LeonardoFarias2000/livro-receitas.git
+ 
+Ir no git bash
+Apontar tudo ao repositório remoto
+Primeiro vamos adicionar a origem
+Git remote add origin https://github.com/LeonardoFarias2000/livro-receitas.git
+  Git remote -v (ira listar os repositórios cadastrados)
+Git push origin master
+Logar com o github e após isso ele ira mostrar os dados da transferencias
+Shift insert = ctrl v
+Conflitos no github
+Pessoas podem tentar contribuir ao mesmo tempo e isso pode gerar um erro caso alguém submeta uma versão primeiro do que a outra pessoa, assim vc tem que usar o código mais atual possível e ai então submeter a s suas alterações, principalmente se for na mesma linha
+Alterando arquivos
+Ir no redme do livro receitas eadicionar outra receita
+No git bash dar um git status – ira apresentar um arquivo alterado
+Dar um git add * para adicionar tudo modificado
+Git status – ira apresentar que o arquivo esta pronto para ser comitado
+Git commit -m “adiciona receita pavê”
+Git push origin master
+Se der conflito usar o git pull (puxar)
+Git pull origin master
+Após realizar as alterações 
+Git add *
+Git commit -m “Resolve conflitos”
+Git push origin  master
+Para baixar um repositório 
+Ir no repositório
+Clicar no botão verde
+Copiar a url para clonar
+Ir para o git bash
+Ir para o workspace
+Git clone https://github.com/TheAlgorithms/Python.git
+Ls para mostrar as pastas
+Cd Python
+Ls -a para mostrar as pastas ocultas
+Git remote – v para mostrar para aonde ele esta apontado
+
+
